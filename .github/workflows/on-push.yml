@@ -33,8 +33,38 @@ jobs:
   integration:
     runs-on: ubuntu-latest
     needs: preparing
+    if: ${{ needs.preparing.outputs.changes == 1 }}
     steps:
       - id: echo
         run: |
           echo "changes=${{ needs.preparing.outputs.changes }}"
           echo "changes=${{ needs.preparing.outputs.test }}"
+  
+  delivery:
+    runs-on: ubuntu-latest
+    needs: integration
+    steps:
+      - id: echo
+        run: |
+          echo "changes=${{ needs.preparing.outputs.changes }}"
+          echo "changes=${{ needs.preparing.outputs.test }}"
+
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    needs: delivery
+    steps:
+      - id: echo
+        run: |
+          echo "changes=${{ needs.preparing.outputs.changes }}"
+          echo "changes=${{ needs.preparing.outputs.test }}"
+
+  trigger-deploy-only:
+    runs-on: ubuntu-latest
+    needs: preparing
+    if: ${{ needs.preparing.outputs.changes == 0 }}
+    steps:
+      - id: echo
+        run: |
+          echo "changes=${{ needs.preparing.outputs.changes }}"
+          echo "changes=${{ needs.preparing.outputs.test }}"
+  
