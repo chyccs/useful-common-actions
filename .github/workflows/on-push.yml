@@ -22,11 +22,12 @@ jobs:
           ref: master
           fetch-depth: 2
       
-      - id: step-changes
-        run: git diff HEAD~1 HEAD --name-only | grep -E "Dockerfile|Pipfile|.html$|.py$" >> $GITHUB_OUTPUT
-
       - id: step-noname
         run: echo "test=good" >> $GITHUB_OUTPUT
+        
+      - id: step-changes
+        run: git diff HEAD~1 HEAD --name-only | grep -E ".yml$" >> $GITHUB_OUTPUT
+
 
   # integration:
   #   runs-on: ubuntu-latest
