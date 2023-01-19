@@ -14,15 +14,19 @@ jobs:
   preparing:
     runs-on: ubuntu-latest
     outputs:
-      changes: ${{ steps.step1.outputs.changes }}
+      changes: ${{ steps.step-changes.outputs.changes }}
+      test: ${{ steps.step-noname.outputs.test }}
     steps:
       - uses: actions/checkout@v3
         with:
           ref: master
           fetch-depth: 2
       
-      - id: step1
+      - id: step-changes
         run: git diff HEAD~1 HEAD --name-only | grep -E "Dockerfile|Pipfile|.html$|.py$" >> $GITHUB_OUTPUT
+
+      - id: step-noname
+        run: echo "test=good" >> $GITHUB_OUTPUT
 
   # integration:
   #   runs-on: ubuntu-latest
