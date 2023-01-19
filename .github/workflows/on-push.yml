@@ -26,7 +26,7 @@ jobs:
         run: echo "test=good" >> $GITHUB_OUTPUT
         
       - id: step-changes
-        run: git diff HEAD~1 HEAD --name-only | grep -E ".yml$" >> $GITHUB_OUTPUT
+        run: git diff HEAD~1 HEAD --name-only | grep -E ".yml$"
 
 
   # integration:
